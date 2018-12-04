@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.platform.dao.OrderProcessDao">
+
+	<resultMap type="com.platform.entity.OrderProcessEntity"
+		id="orderProcessMap">
+		<result property="id" column="id" />
+		<result property="orderId" column="order_id" />
+		<result property="addTime" column="add_time" />
+		<result property="desc" column="desc" />
+		<result property="sysUsername" column="sys_username" />
+	</resultMap>
+
+	<select id="queryObject"
+		resultType="com.platform.entity.OrderProcessEntity">
+		select
+		nideshop_order_process.`desc`,
+		nideshop_order_process.id,
+		nideshop_order_process.add_time addTime,
+		nideshop_order.order_sn
+		orderSn,
+		nideshop_order_process.sys_username
+		sysUsername
+		from
+		nideshop_order_process
+		LEFT JOIN nideshop_order ON
+		nideshop_order_process.order_id =
+		nideshop_order.id
+		where
+		nideshop_order_process.id
+		= #{id}
+	</select>
+
+	<select id="queryList"
+		resultType="com.platform.entity.OrderProcessEntity">
+		select `desc`,
+		add_time addTime,
+		id,
+		sys_username sysUsername
+		FROM
+		nideshop_order_process
+		WHERE 1=1
+		<if test="name != null and name.trim() != ''">
+			AND name LIKE concat('%',#{name},'%')
+		</if>
+		<if test="orderId!=null">
+			and order_id=#{orderId}
+		</if>
+		<if test="sysUsername!=null">
+			and sys_username=#{sysUsername}
+		</if>
+		<choose>
+			<when test="sidx != null and sidx.trim() != ''">
+				order by ${sidx} ${order}
+			</when>
+			<otherwise>
+				order by addTime desc
+			</otherwise>
+		</choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+
+	<select id="queryTotal" resultType="int">
+		select count(*) from nideshop_order_process
+		WHERE 1=1
+		<if test="name != null and name.trim() != ''">
+			AND name LIKE concat('%',#{name},'%')
+		</if>
+	</select>
+
+	<insert id="save"
+		parameterType="com.platform.entity.OrderProcessEntity"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into
+		nideshop_order_process(
+		`order_id`,
+		`add_time`,
+		`desc`,
+		`sys_username`)
+		values(
+		#{orderId},
+		#{addTime},
+		#{desc},
+		#{sysUsername})
+	</insert>
+
+	<update id="update"
+		parameterType="com.platform.entity.OrderProcessEntity">
+		update nideshop_order_process
+		<set>
+			<if test="orderId != null">`order_id` = #{orderId}, </if>
+			<if test="addTime != null">`add_time` = #{addTime}, </if>
+			<if test="desc != null">`desc` = #{desc}, </if>
+			<if test="sysUsername != null">`sys_username` = #{sysUsername}</if>
+		</set>
+		where id = #{id}
+	</update>
+
+	<delete id="delete">
+		delete from nideshop_order_process where id =
+		#{value}
+	</delete>
+
+	<delete id="deleteBatch">
+		delete from nideshop_order_process where id in
+		<foreach item="id" collection="array" open="(" separator=","
+			close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title></title> #parse("sys/header.html")
+</head>
+<body>
+	<div id="rrapp" v-cloak>
+		<div>
+			<Card>
+			<p slot="title">{{title}}</p>
+			<i-form> 
+				<Form-item lable='导出时间'>
+				<Date-picker type="daterange" @on-change="time"placeholder="下单时间"  format="yyyy-MM-dd"editable=false />
+			   
+			    </Form-item> 
+			    <Form-item>
+			     <i-select v-model="q.orderStatus">
+                 <i-option value="">请选择</i-option>
+                    <i-option value="WAIT_BUYER_PAY">待付款</i-option>
+                    <i-option value="WAIT_SELLER_SEND_GOODS">待发货</i-option>
+                    <i-option value="WAIT_BUYER_CONFIRM_GOODS">等待卖家确认</i-option>
+                    <i-option value="TRADE_SUCCESS">订单完成</i-option>
+                    <i-option value="TRADE_CLOSE">订单关闭</i-option>
+                    <i-option value="TRADE_REFUNDING">退款中</i-option>
+                
+                </i-select>
+				</Form-item>
+				 <Form-item> 
+				 <i-button type="primary"@click=yzdownloadOrder>导出</i-button>  </Form-item> </i-form> </Card>
+		</div>
+	</div>
+	<script src="${rc.contextPath}/js/shop/yzorder.js"></script>
+</body>
+</html>

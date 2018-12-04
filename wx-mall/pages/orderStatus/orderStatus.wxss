@@ -1,0 +1,81 @@
+/* pages/orderStatus/orderStatus.wxss */
+page{
+  background-color: #f4f4f4;
+}
+.status-title{
+  font-size: 28rpx;
+  border-bottom: 2rpx solid #f4f4f4;
+  padding-bottom:37rpx;
+}
+.orderStatusBox{
+  margin-top: 10rpx;
+  background-color: #fff;  
+  padding:33rpx 30rpx;
+  word-break:break-all;
+}
+.orderStatusBox:first-child{
+  padding: 33rpx 30rpx 0;
+}
+.status-contain-box{
+  margin-top: 40rpx;
+}
+.status-contain{
+  border-left: 2rpx solid #ddd;
+  margin-left:20rpx;
+  padding-left: 50rpx;
+  position: relative;
+  font-size: 28rpx;
+}
+.status-contain:first-child view{
+  color: #b4282d;
+}
+.status-contain:not(:first-child){
+  padding-top: 20rpx;
+}
+.status-contain::before{
+  content: '';
+  width: 16rpx;
+  height: 16rpx;
+  border-radius: 50%;
+  background-color: #c2c2c2;    
+  position: absolute;
+  top: 30rpx;
+  left: -7rpx;
+  z-index: 1;
+}
+.status-contain:first-child::before{
+  top: 0;
+  left: -16rpx;
+  background-color: #b4282d;
+  width: 26rpx;
+  height: 26rpx;
+  border: 3rpx solid #e1a9ab;
+  z-index: 9;
+}
+.status-contain view:first-child{
+  margin-bottom: 23rpx;
+}
+.status-contain view:last-child{
+  padding-bottom: 39rpx;
+  border-bottom: 2rpx solid #f4f4f4;
+  font-size: 25rpx;
+}
+.orderStatusBox text{
+  color: #555;
+  font-size: 28rpx;
+}
+.status-contain:last-child view:last-child{
+  border: none;
+}
+.status-contain:last-child{
+  border: none;
+}
+.status-contain:last-child::after{
+  content: "";
+  width: 2rpx;
+  height: 30rpx;
+  position: absolute;
+  top: 0;
+  left: 0rpx;
+  background: #ddd;
+}

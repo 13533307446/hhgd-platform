@@ -1,0 +1,16 @@
+<view>
+  <view class='orderStatusBox'>
+    <view class='status-title'>订单状态：</view>
+    <view wx:if="{{orderStatus.length>0}}" class='status-contain-box'>
+      <block wx:for="{{orderStatus}}" wx:key="{{item}}">
+        <view class='status-contain'>
+          <view>{{item.desc}}</view>
+          <view>{{item.addTime}}</view>
+        </view>
+      </block>
+    </view>
+  </view>
+</view>
+<view class='orderStatusBox'>发货时间：{{orderQueryList.shippingTime}}</view>
+<view class='orderStatusBox'>物流公司：{{orderQueryList.shippingName}}</view>
+<view class='orderStatusBox'>物流单号：<text selectable='true'>{{orderQueryList.logisticsNum}}</text></view>

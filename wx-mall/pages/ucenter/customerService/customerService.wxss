@@ -1,0 +1,20 @@
+/* pages/ucenter/customerService/customerService.wxss */
+page{
+  background-color: #fff;
+}
+.container{
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  width: 100%;
+  text-align: center;
+  background-color: #fff;
+}
+.container view{
+  margin-bottom: 30rpx;
+  font-size: 36rpx;
+}
+.container image{
+  width: 60%;
+}

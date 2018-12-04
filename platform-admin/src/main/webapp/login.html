@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>统一登录页面</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="statics/css/bootstrap.min.css">
+    <link rel="stylesheet" href="statics/css/font-awesome.min.css">
+    <link rel="stylesheet" href="statics/css/style.css">
+    <link rel="stylesheet" href="statics/css/login.css">
+    <link rel="stylesheet" href="statics/css/main.css">
+    <link rel="stylesheet" href="statics/css/iview.css">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="statics/libs/html5shiv.min.js"></script>
+    <script src="statics/libs/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body class="signin hold-transition login-page">
+<div class="loginscreen animated fadeInDown signinpanel" id="loginBox" v-cloak>
+    <div class="row">
+        <div class="col-md-7">
+            <div class="signin-info">
+                <div class="logopanel m-b">
+                    <h1>广州酷漫居动漫科技有限公司</h1>
+                </div>
+                <div class="m-b"></div>
+                <h4>欢迎使用 <strong>好好高低床运营管理平台</strong></h4>
+                <ul class="m-b">
+                    <li><i class="fa fa-arrow-circle-o-right m-r-xs"></i> 选用了经典大气的床型作为基础造型，因为最经典的也最隽永，能长久的陪伴宝宝</li>
+                    <li><i class="fa fa-arrow-circle-o-right m-r-xs"></i> 用小熊头和侧边护栏的弧度，打破原本的沉闷死板，让整张床看起来更生动富有童趣</li>
+                    <li><i class="fa fa-arrow-circle-o-right m-r-xs"></i> 增加了一款freestyle的打印面板，可以更换图案，还有白板可以选择</li>
+                    <li><i class="fa fa-arrow-circle-o-right m-r-xs"></i> 选用进口芬兰松，芬兰桑拿浴房首选用材，质感温润如玉，抗压抗剪强度高，不易霉变开裂</li>
+                    <li><i class="fa fa-arrow-circle-o-right m-r-xs"></i> A级别用材，28%的木材使用率 </li>
+
+                    <li><i class="fa fa-arrow-circle-o-right m-r-xs"></i> 官方商城：mall.kumanju.com</li>
+                    <li><i class="fa fa-arrow-circle-o-right m-r-xs"></i> <a
+                            href="http://www.kumanju.com" target="_blank" style="color: white;">酷漫居官网</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-5">
+            <Card class="m-t text-center" style="background: rgba(109, 109, 109, 0.23);border: 0px solid #dddee1;">
+                <p style="padding: 0 20px 20px 20px;">登录到小程序管理平台</p>
+                <div class="form-group has-feedback">
+                    <i-input v-model="username" @on-enter="login" placeholder="账号" style="width: 200px;" autofocus/>
+                </div>
+                <div class="form-group has-feedback">
+                    <i-input type="password" v-model="password" @on-enter="login" style="width: 200px;"
+                             placeholder="密码"/>
+                </div>
+                <div class="form-group has-feedback">
+                    <div style="display: inline-block;width: 100px;" >
+                        <i-input v-model="captcha" @on-enter="login"
+                                 placeholder="验证码"/>
+                    </div>
+                    <div style="display: inline-block;width: 100px;" >
+                        <img style="height: 32px;width: 96px;border-radius: 4px;" alt="如果看不清楚，请单击图片刷新！" title="点击刷新"
+                             class="pointer" :src="src" @click="refreshCode">
+                    </div>
+                </div>
+                <div>
+                    <i-button type="primary" @click="login" style="width: 200px;">登录</i-button>
+                </div>
+            </Card>
+        </div>
+    </div>
+    <div class="signup-footer">
+        <div class="pull-left">
+            2017~2018 &copy; 广州酷漫居动漫科技有限公司 版权所有. All Rights Reserved.
+        </div>
+    </div>
+</div>
+<!-- /.login-box -->
+<script src="statics/libs/jquery.min.js"></script>
+<script src="statics/libs/vue.min.js"></script>
+<script src="statics/libs/iview.min.js"></script>
+<script src="statics/libs/bootstrap.min.js"></script>
+<script src="statics/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+<script src="statics/libs/fastclick.min.js"></script>
+<script type="text/javascript">
+    var vm = new Vue({
+        el: '#loginBox',
+        data: {
+            username: '',
+            password: '',
+            captcha: '',
+            src: 'captcha.jpg'
+        },
+        beforeCreate: function () {
+            if (self != top) {
+                top.location.href = self.location.href;
+            }
+        },
+        methods: {
+            refreshCode: function () {
+                this.src = "captcha.jpg?t=" + $.now();
+            },
+            login: function (event) {
+                if (vm.username == '') {
+                    iview.Message.warning("用户名为空");
+                    return false;
+                }
+                if (vm.password == '') {
+                    iview.Message.warning("密码为空");
+                    return false;
+                }
+                if (vm.captcha == '') {
+                    iview.Message.warning("验证码为空");
+                    return false;
+                }
+                var data = "username=" + vm.username + "&password=" + vm.password + "&captcha=" + vm.captcha;
+                $.ajax({
+                    type: "POST",
+                    url: "sys/login",
+                    data: data,
+                    dataType: "json",
+                    success: function (result) {
+                        if (result.code == 0) {//登录成功
+                            parent.location.href = 'index.html';
+                        } else {
+                            vm.refreshCode();
+                            iview.Message.error(result.msg);
+                        }
+                    }
+                });
+            }
+        }
+    });
+</script>
+</body>
+</html>

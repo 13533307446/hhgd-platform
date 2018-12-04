@@ -1,0 +1,8 @@
+<!--pages/ucenter/customerService/customerService.wxml-->
+<view class='container'>
+  <view>亲爱的，在线客服功能还在努力开发中！</view>
+  <view>可以先加我们客服微信哦~</view>
+  <view>找客服宝宝：kumanjukefu</view>
+  <image mode='widthFix' bindtap="previewImage" src='{{imgUrl}}'></image>
+  <view style='font-size:28rpx;'>（点击二维码，长按保存图片）</view>
+</view>
